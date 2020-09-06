@@ -5,68 +5,47 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity{
+public class MinActivity extends AppCompatActivity {
 
-    public static final String BASE_URL = "https://api.data.gov.in/resource/9ef84268-d588-465a-a308-a864a43d0070?api-key=579b464db66ec23bdd0000015c4e13aaf9b441357c6510208452f298&format=json&offset=0&limit=1000";
     RecyclerView recyclerView;
     RecyclerViewAdapter recyclerViewAdapter;
     RequestQueue requestQueue;
     int i=0;
     List<Record> recordList = new ArrayList<>();
-    Button min, max;
+    ArrayList minList = new ArrayList();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_min);
 
-        min = findViewById(R.id.min_button);
-        max = findViewById(R.id.max_button);
-
-        min.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, MinActivity.class));
-            }
-        });
-
-        max.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, MaxActivity.class));
-            }
-        });
-
-        recyclerView = findViewById(R.id.view2);
+        recyclerView = findViewById(R.id.view1);
         requestQueue = Volley.newRequestQueue(this);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(MinActivity.this));
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading...");
         progressDialog.show();
+
         final JsonObjectRequest jsonArrayRequest = new JsonObjectRequest(Request.Method.GET, "https://api.data.gov.in/resource/9ef84268-d588-465a-a308-a864a43d0070?api-key=579b464db66ec23bdd0000019468d5d310a24a5f5191ba02ce4216f2&format=json&offset=0&limit=1000", null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -91,7 +70,11 @@ public class MainActivity extends AppCompatActivity{
                             Log.d("myapp", "Error is" + e);
                         }
                     }
-                    recyclerViewAdapter = new RecyclerViewAdapter(MainActivity.this, recordList);
+                    Collections.sort(recordList);
+                    for (i=0; i<10; i++){
+                        minList.add(recordList.get(i));
+                    }
+                    recyclerViewAdapter = new RecyclerViewAdapter(MinActivity.this, minList);
                     recyclerView.setAdapter(recyclerViewAdapter);
                     progressDialog.dismiss();
                 } catch (JSONException e) {
@@ -107,4 +90,4 @@ public class MainActivity extends AppCompatActivity{
         });
         requestQueue.add(jsonArrayRequest);
     }
-}
+    }

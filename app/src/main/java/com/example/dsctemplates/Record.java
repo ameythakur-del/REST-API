@@ -1,6 +1,8 @@
 package com.example.dsctemplates;
 
-public class Record {
+import java.util.Comparator;
+
+public class Record implements Comparable<Record> {
     String timestamp, state, district, market, commodity, variety, arrival_date, min_price, max_price, modal_price;
 
     public Record() {
@@ -98,4 +100,18 @@ public class Record {
     public void setModal_price(String modal_price) {
         this.modal_price = modal_price;
     }
+
+    @Override
+    public int compareTo(Record o) {
+        int a = Integer.parseInt(this.min_price);
+        int b = Integer.parseInt(o.getMin_price());
+        return a - b;
+    }
+
+    public static Comparator<Record> myName = new Comparator<Record>() {
+        @Override
+        public int compare(Record e1, Record e2) {
+            return e1.getMax_price().compareTo(e2.getMax_price());
+        }
+    };
 }
