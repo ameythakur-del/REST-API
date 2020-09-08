@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity{
             public void onResponse(JSONObject response) {
                 try {
                     JSONArray jsonObject = response.getJSONArray("records");
+                    List<Record> recordList = new ArrayList<>();
                     for (i=0; i < jsonObject.length(); i++){
                         try {
                             JSONObject jsonObject1 = jsonObject.getJSONObject(i);

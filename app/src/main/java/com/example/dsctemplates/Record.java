@@ -3,7 +3,16 @@ package com.example.dsctemplates;
 import java.util.Comparator;
 
 public class Record implements Comparable<Record> {
-    String timestamp, state, district, market, commodity, variety, arrival_date, min_price, max_price, modal_price;
+    String timestamp;
+    String state;
+    String district;
+    String market;
+    String commodity;
+    String variety;
+    String arrival_date;
+    String min_price;
+    String max_price;
+    String modal_price;
 
     public Record() {
     }
@@ -103,9 +112,10 @@ public class Record implements Comparable<Record> {
 
     @Override
     public int compareTo(Record o) {
-        int a = Integer.parseInt(this.min_price);
-        int b = Integer.parseInt(o.getMin_price());
-        return a - b;
+        Float a = Float.parseFloat(this.min_price);
+        Float b = Float.parseFloat(o.getMin_price());
+        int c = Math.round(a-b);
+        return c;
     }
 
     public static Comparator<Record> myName = new Comparator<Record>() {

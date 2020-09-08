@@ -30,14 +30,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/min_button">
 
-        <androidx.core.widget.NestedScrollView
-            android:layout_marginBottom="50dp"
-            android:id="@+id/scrollView2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/min_button">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/view2"
@@ -45,6 +37,5 @@
                 android:layout_height="wrap_content"
                 android:nestedScrollingEnabled="false" />
 
-        </androidx.core.widget.NestedScrollView>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
